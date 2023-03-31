@@ -7,7 +7,7 @@ from rest_framework.decorators import action
 from .models import *
 from .serializers import *
 from oauth2_provider.contrib.rest_framework import TokenHasReadWriteScope
-
+from .pagination import *
 # --------------  view creat user ------------------------
 class UserViewSet(viewsets.ViewSet,generics.CreateAPIView):
     queryset = User.objects.all()
@@ -26,12 +26,13 @@ class UserViewSet(viewsets.ViewSet,generics.CreateAPIView):
 
 
 # ------------------------- get comment --------------------------------
-class CommentViewSet(viewsets.ViewSet,generics.ListAPIView,APIView):
+class CommentViewSet(viewsets.ViewSet,generics.ListAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['video_id']
     permission_classes = [permissions.IsAuthenticated, TokenHasReadWriteScope]
+    pagination_class = PaginationClass
     
     def get_permissions(self):
         if self.action == 'create':
@@ -46,9 +47,9 @@ class CommentViewSet(viewsets.ViewSet,generics.ListAPIView,APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
 # ------------------------------ reply comment ------------------
 class ReplyCommentViewSet(viewsets.ViewSet,generics.CreateAPIView):
     queryset = ReplyComment.objects.all()
     serializer_class = ReplyPostCommentSerializer
+    permission_classes = [permissions.IsAuthenticated]
 

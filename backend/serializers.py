@@ -62,6 +62,6 @@ class CommentSerializer(ModelSerializer):
 class CommentPostSerializer(ModelSerializer):
     class Meta:
         model = Comment
-        fields =('user','video_id','content','created_at')
+        fields =('id','user','video_id','content','created_at')
         
     

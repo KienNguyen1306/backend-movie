@@ -65,6 +65,10 @@ MIDDLEWARE = [
 ROOT_URLCONF = 'main.urls'
 MEDIA_ROOT = '%s/backend/static/'%BASE_DIR
 
+OAUTH2_PROVIDER ={
+    'OAUTH2_BACKEND_CLASS':'oauth2_provider.oauth2_backends.JSONOAuthLibCore'
+}
+
 
 TEMPLATES = [
     {

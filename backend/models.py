@@ -11,6 +11,8 @@ class User(AbstractUser):
 
 
 class Comment(models.Model):
+    class Meta:
+        ordering = ['-created_at']
     user = models.ForeignKey(User, on_delete=models.CASCADE,related_name='curentuser')
     video_id = models.IntegerField(null=False)
     content = models.TextField()
